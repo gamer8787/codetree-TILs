@@ -42,6 +42,8 @@ dc = [0,1,0,-1,-1,1,1,-1]
 # M=1
 live_santa = set([i for i in range(1,P+1)])
 for turn in range(1,M+1):
+    if not live_santa:
+        break
     distance_r_c = []
     for k in range(8):
         nr = Rr+dr[k]
