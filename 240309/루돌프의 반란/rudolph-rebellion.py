@@ -52,10 +52,11 @@ for turn in range(1,M+1):
             sr,sc,bo,score = santa_info[san]
             if san not in live_santa:
                 continue
-            distance = (sr-nr)**2 + (sc-nc)**2
-            distance_r_c.append([distance,sr,sc,nr,nc,dr[k],dc[k]])
-    distance_r_c.sort(key= lambda x:(x[0],-x[1],-x[2]))
-    dis,sr,sc,nr,nc,drk,dck = distance_r_c[0]
+            distance = (Rr-sr)**2 + (Rc-sc)**2
+            distance2 = (nr-sr)**2 + (nc-sc)**2
+            distance_r_c.append([distance,sr,sc,distance2,nr,nc,dr[k],dc[k]])
+    distance_r_c.sort(key= lambda x:(x[0],-x[1],-x[2],x[3]))
+    dis,sr,sc,_,nr,nc,drk,dck = distance_r_c[0]
     graph[Rr][Rc] = 0
     Rr = nr
     Rc = nc
