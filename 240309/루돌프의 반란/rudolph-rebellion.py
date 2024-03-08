@@ -13,6 +13,8 @@ def live(r,c):
         return False
 def crush(r,c,drk,dck,santa):
     if not live(r,c):
+        santa_info[santa][0] = r
+        santa_info[santa][1] = c
         return
     if graph[r][c] == 0 :
         graph[r][c] = santa
@@ -74,7 +76,7 @@ for turn in range(1,M+1):
     for santa in range(1,P+1):
         san_r,san_c,stun,score = santa_info[santa] # (3)
 
-        if santa in live_santa and stun < turn :
+        if santa in live_santa and live(san_r,san_c) and stun < turn :
             distance_d = []
             distance = (san_r-Rr)**2 + (san_c-Rc)**2
             distance_d.append([distance,0,san_r,san_c,0,0])
