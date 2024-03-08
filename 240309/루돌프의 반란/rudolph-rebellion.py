@@ -16,9 +16,13 @@ def crush(r,c,drk,dck,santa):
         return
     if graph[r][c] == 0 :
         graph[r][c] = santa
+        santa_info[santa][0] = r
+        santa_info[santa][1] = c
         return
     other_santa = graph[r][c]
     graph[r][c] = santa
+    santa_info[santa][0] = r
+    santa_info[santa][1] = c
     new_r,new_c = r+drk,c+dck
     crush(new_r,new_c,drk,dck,other_santa)
 
