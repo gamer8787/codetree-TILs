@@ -1,98 +1,71 @@
-import copy
+import sys
+input = sys.stdin.readline
 
-N,M,K = map(int,input().split())
-graph = [list(map(int,input().split())) for _ in range(N)]
-participant = [[[] for _ in range(N)] for _ in range(N)]
-dy = [-1,1,0,0]
-dx = [0,0,1,-1]
-for n in range(M):
-    i,j = map(int,input().split())
-    participant[i-1][j-1].append(n)
+def move(sr, sc, er, ec):
+    dist = abs(sr-er)+abs(sc-ec)
+    distance = dist
+    rr, cc = sr, sc
+    for dx, dy in ((1,0),(-1,0),(0,1),(0,-1)):
+        nx, ny = sr+dx, sc+dy
+        if 0 <= nx < N and 0 <= ny < N and not A[nx][ny]:
+            dd = abs(nx-er)+abs(ny-ec)
+            if dd < dist:
+                dist, rr, cc, = dd, nx, ny
+    return rr, cc, distance-dist
 
-ey,ex = map(int,input().split())
-ey-=1
-ex-=1
-moving_distance = 0
-def move():
-    global participant,moving_distance
-    temp_participant = [[[] for _ in range(N)] for _ in range(N)]
-    for i in range(N):
-        for j in range(N):
-            if participant[i][j]:
-                ret = []
-                distance = abs(i-ey) + abs(j-ex)
-                ret.append([distance,-1,i,j])
-                for k in range(4):
-                    ny = i +dy[k]
-                    nx = j + dx[k]
-                    if 0<=ny<N and 0<=nx<N and graph[ny][nx] == 0:
-                        distance = abs(ny-ey) + abs(nx-ex)
-                        ret.append([distance,k,ny,nx])
-                ret.sort()
-                _,k,ny,nx = ret[0]
-                if k>=0:
-                    moving_distance+=len(participant[i][j])
-                if ny == ey and nx == ex: #나가게 됨
-                    continue
-                temp_participant[ny][nx].extend(participant[i][j])
-    participant = temp_participant
-copy_graph = [[0 for _ in range(N)] for _ in range(N)]
-copy_participant = [[[] for _ in range(N)] for _ in range(N)]
-def rotate_square(i,j,minimum): #회전하고 출구 좌표도 잡아줘야됨
-    global ey,ex
-    # copy_graph = copy.deepcopy(graph)
-    # copy_participant = copy.deepcopy(participant)
-    for y in range(minimum+1):
-        for x in range(minimum+1):
-            copy_graph[i+y][j+x] = graph[i+minimum-x][j+y]
-            if copy_graph[i+y][j+x] > 0 :
-                copy_graph[i + y][j + x]-=1
-            copy_participant[i + y][j + x] = participant[i + minimum - x][j + y]
-    for y in range(minimum+1):
-        for x in range(minimum+1):
-            graph[i+y][j+x] = copy_graph[i+y][j+x]
-            participant[i + y][j + x] = copy_participant[i + y][j + x]
-    y = ey - i
-    x = ex - j
-    ey = i +x
-    ex = j+minimum - y
-def rotate():
-    minimum = 10**9
-    for i in range(N):
-        for j in range(N):
-            if participant[i][j]:
-                distance = max(abs(i-ey) , abs(j-ex))
-                minimum = min(minimum,distance)
-    if minimum == 10**9:
-        return
-    for i in range(N-minimum):
-        for j in range(N-minimum):
-            have_exit =False
-            have_participant =False
-            for i2 in range(minimum+1):
-                for j2 in range(minimum+1):
-                    if i+i2 == ey and j+j2 == ex:
-                        have_exit = True
-                    if participant[i+i2][j+j2]:
-                        have_participant=True
-            # print(minimum,have_exit,have_participant)
-            if have_exit and have_participant:
-                rotate_square(i, j, minimum)
-                return
-def pp():
-    for g in graph:
-        print(g)
-    print()
-    for g in participant:
-        print(g)
-    print()
-# pp()
-for i in range(K):
-    # print(ey,ex)
-    # print(i+1)
-    move()
-    # pp()
-    rotate()
-    # pp()
-print(moving_distance)
-print(ey+1,ex+1)
+def find_square():
+    for l in range(1, N):
+        for r in range(N):
+            for c in range(N):
+                if r <= er <= r+l and c <= ec <= c+l:
+                    for i in range(l+1):
+                        for j in range(l+1):
+                            if r+i < N and c+j < N and P[r+i][c+j]:
+                                return r, c, l+1
+
+N, M, K = map(int, input().split())
+A = [list(map(int, input().split())) for _ in range(N)]
+P = [[[] for _ in range(N)] for _ in range(N)]
+player = dict()
+for idx in range(M):
+    r, c = map(lambda x: int(x)-1, input().split())
+    P[r][c].append(idx)
+    player[idx] = [r, c]
+er, ec = map(lambda x: int(x)-1, input().split())
+
+answer = 0
+for _ in range(K):
+    if player:
+        delete = []
+        for idx, (sr, sc) in player.items():
+            nx, ny, result = move(sr, sc, er, ec)
+            answer += result
+            P[sr][sc].remove(idx)
+            if (nx, ny) == (er, ec):
+                delete.append(idx)
+            else:
+                player[idx] = [nx, ny]
+                P[nx][ny].append(idx)
+        for idx in delete:
+            del player[idx]
+        if not player: break
+
+    rr, cc, l = find_square()
+    rotate = dict()
+    for r in range(l):
+        for c in range(l):
+            rotate[(rr+r, cc+c)] = (rr+c, cc+l-r-1)
+
+    NP = [[e[:] for e in row] for row in P]
+    B = [row[:] for row in A]
+    er, ec = rotate[(er, ec)]
+    for (r, c), (nx, ny) in rotate.items():
+        if P[r][c]:
+            for idx in P[r][c]:
+                player[idx] = [nx, ny]
+        NP[nx][ny] = P[r][c]
+        B[nx][ny] = max(0, A[r][c]-1)
+    A, P = B, NP
+
+print(answer)
+print(er+1, ec+1)
