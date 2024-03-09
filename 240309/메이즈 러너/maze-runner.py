@@ -57,7 +57,8 @@ def rotate():
             if participant[i][j]:
                 distance = max(abs(i-ey) , abs(j-ex))
                 minimum = min(minimum,distance)
-
+    if minimum == 10**9:
+        return
     for i in range(N-minimum):
         for j in range(N-minimum):
             have_exit =False
