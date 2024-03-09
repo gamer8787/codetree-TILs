@@ -29,10 +29,10 @@ def bound(r,c):
         return True
     else:
         return False
-def check(knight,d,command):
+def check(knight,d):
     r,c,h,w,k = knights[knight-1]
     if k <= 0:
-        return True
+        return False
     ret = True
     neigh_knight = set()
     for i in range(r, r + h):
@@ -45,29 +45,41 @@ def check(knight,d,command):
             if other_knight!=knight and other_knight!=0:
                 neigh_knight.add(other_knight)
     for neigh in neigh_knight:
-        ret = ret & check(neigh,d,False)
-
-    if ret:
-        move = []
-        knights[knight - 1][0] = r+dy[d]
-        knights[knight - 1][1] = c + dx[d]
-        for i in range(r,r+h):
-            for j in range(c,c+w):
-                move.append([i+dy[d], j+dx[d]])
-                knight_graph[i][j] = 0
-        for i,j in move:
-            knight_graph[i][j] = knight
-            if graph[i][j] == TRAP and (not command):
-                knights[knight - 1][4]-=1
-        if knights[knight - 1][4] <= 0:
-            for i,j in move:
-                knight_graph[i][j] = 0
-
-    # print(knight,ret)
+        ret = ret & check(neigh,d)
     return ret
+
+def moving(knight,d,command):
+    r,c,h,w,k = knights[knight-1]
+
+    neigh_knight = set()
+    for i in range(r, r + h):
+        for j in range(c, c + w):
+            other_knight = knight_graph[i + dy[d]][j + dx[d]]
+            if other_knight != knight and other_knight != 0:
+                neigh_knight.add(other_knight)
+    for neigh in neigh_knight:
+        moving(neigh,d,False)
+    move = []
+    knights[knight - 1][0] = r+dy[d]
+    knights[knight - 1][1] = c + dx[d]
+    for i in range(r,r+h):
+        for j in range(c,c+w):
+            move.append([i+dy[d], j+dx[d]])
+            knight_graph[i][j] = 0
+    for i,j in move:
+        knight_graph[i][j] = knight
+        if graph[i][j] == TRAP and (not command):
+            knights[knight - 1][4]-=1
+    if knights[knight - 1][4] <= 0:
+        for i,j in move:
+            knight_graph[i][j] = 0
+
 # pp()
 for knight, d in commands:
-    check(knight,d,True)
+    a = check(knight,d)
+    if a:
+        moving(knight,d,True)
+
     # pp()
 
 sum_damage = 0
