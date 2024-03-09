@@ -34,7 +34,7 @@ def move():
                     moving_distance+=len(participant[i][j])
                 if ny == ey and nx == ex: #나가게 됨
                     continue
-                temp_participant[ny][nx] = participant[i][j]
+                temp_participant[ny][nx].extend(participant[i][j])
     participant = temp_participant
 def rotate_square(i,j,minimum): #회전하고 출구 좌표도 잡아줘야됨
     global ey,ex
@@ -53,13 +53,13 @@ def rotate_square(i,j,minimum): #회전하고 출구 좌표도 잡아줘야됨
     ey = i +x
     ex = j+minimum - y
 def rotate():
-    minimum = 10**3
+    minimum = 10**9
     for i in range(N):
         for j in range(N):
             if participant[i][j]:
                 distance = max(abs(i-ey) , abs(j-ex))
                 minimum = min(minimum,distance)
-    if minimum == 10**3:
+    if minimum == 10**9:
         return
     for i in range(N-minimum):
         for j in range(N-minimum):
