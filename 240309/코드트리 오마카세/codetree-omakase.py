@@ -6,7 +6,7 @@ L, Q = map(int,sys.stdin.readline().rstrip().split())
 name_chobab =defaultdict(list)
 name_info = {}
 for _ in range(Q):
-    command = input().split()
+    command = sys.stdin.readline().rstrip().split()
     if command[0] == "100":
         name = command[3]
         t,x = int(command[1]),int(command[2])
