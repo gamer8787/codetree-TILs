@@ -51,13 +51,13 @@ def rotate_square(i,j,minimum): #회전하고 출구 좌표도 잡아줘야됨
     ey = i +x
     ex = j+minimum - y
 def rotate():
-    minimum = 10**7
+    minimum = 10**3
     for i in range(N):
         for j in range(N):
             if participant[i][j]:
                 distance = max(abs(i-ey) , abs(j-ex))
                 minimum = min(minimum,distance)
-    if minimum == 10**7:
+    if minimum == 10**3:
         return
     for i in range(N-minimum):
         for j in range(N-minimum):
