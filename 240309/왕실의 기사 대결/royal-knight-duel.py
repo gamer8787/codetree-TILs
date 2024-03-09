@@ -32,7 +32,7 @@ def bound(r,c):
 def check(knight,d,command):
     r,c,h,w,k = knights[knight-1]
     if k <= 0:
-        return
+        return True
     ret = True
     neigh_knight = set()
     for i in range(r, r + h):
@@ -65,10 +65,10 @@ def check(knight,d,command):
 
     # print(knight,ret)
     return ret
-# pp()
+pp()
 for knight, d in commands:
     check(knight,d,True)
-    # pp()
+    pp()
 
 sum_damage = 0
 for i,(r,c,w,h,k) in enumerate(knights):
