@@ -38,10 +38,10 @@ def move():
     participant = temp_participant
 def rotate_square(i,j,minimum): #회전하고 출구 좌표도 잡아줘야됨
     global ey,ex
-    copy_graph = copy.deepcopy(graph)
-    copy_participant = copy.deepcopy(participant)
-    # copy_graph =[i[:] for i in graph]
-    # copy_participant = [i[:] for i in participant]
+    # copy_graph = copy.deepcopy(graph)
+    # copy_participant = copy.deepcopy(participant)
+    copy_graph =[i[:] for i in graph]
+    copy_participant = [i[:] for i in participant]
     for y in range(minimum+1):
         for x in range(minimum+1):
             graph[i+y][j+x] = copy_graph[i+minimum-x][j+y]
