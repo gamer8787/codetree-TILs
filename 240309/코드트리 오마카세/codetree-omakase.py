@@ -20,11 +20,15 @@ for _ in range(Q):
         peo_count =0
         cho_count = 0
         for name, info in name_info.items():
+            if info[2] ==0:
+                continue
             chobab = name_chobab[name]
             arrival_time = info[0]
             place = info[1]
             remain_chobab = chobab[:]
             for i,(t,x) in enumerate(chobab):
+                if info[2] ==0:
+                    break
                 t = int(t)
                 x = int(x)
                 if arrival_time < t: #초밥이 늦게 나옴
