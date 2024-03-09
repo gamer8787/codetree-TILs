@@ -59,8 +59,8 @@ def rotate():
                 minimum = min(minimum,distance)
     if minimum == 10**9:
         return
-    for i in range(N-minimum):
-        for j in range(N-minimum):
+    for i in range(N-minimum+1):
+        for j in range(N-minimum+1):
             have_exit =False
             have_participant =False
             for i2 in range(minimum+1):
