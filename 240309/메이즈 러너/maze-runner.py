@@ -37,7 +37,7 @@ def move():
                 temp_participant[ny][nx].extend(participant[i][j])
     participant = temp_participant
 def rotate_square(i,j,minimum): #회전하고 출구 좌표도 잡아줘야됨
-    global ey,ex
+    global ey,ex,participant,graph
     # copy_graph = copy.deepcopy(graph)
     # copy_participant = copy.deepcopy(participant)
     copy_graph =[g[:] for g in graph]
