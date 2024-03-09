@@ -31,7 +31,7 @@ def bound(r,c):
         return False
 def check(knight,d,command):
     r,c,h,w,k = knights[knight-1]
-    if k < 0:
+    if k <= 0:
         return
     ret = True
     neigh_knight = set()
