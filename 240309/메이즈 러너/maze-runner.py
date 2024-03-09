@@ -80,13 +80,13 @@ def pp():
     for g in participant:
         print(g)
     print()
-pp()
+# pp()
 for i in range(K):
-    print(ey,ex)
-    print(i+1)
+    # print(ey,ex)
+    # print(i+1)
     move()
-    pp()
+    # pp()
     rotate()
-    pp()
+    # pp()
 print(moving_distance)
 print(ey+1,ex+1)
