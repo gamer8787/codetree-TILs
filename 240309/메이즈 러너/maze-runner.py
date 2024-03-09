@@ -1,6 +1,6 @@
 import copy
 import sys
-sys.setrecursionlimit(10**7)
+sys.setrecursionlimit(10**4)
 N,M,K = map(int,input().split())
 graph = [list(map(int,input().split())) for _ in range(N)]
 participant = [[[] for _ in range(N)] for _ in range(N)]
