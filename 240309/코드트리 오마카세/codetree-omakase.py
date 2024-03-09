@@ -1,6 +1,7 @@
+import sys
 from collections import defaultdict
 
-L, Q = map(int,input().split())
+L, Q = map(int,sys.stdin.readline().rstrip().split())
 
 name_chobab =defaultdict(list)
 name_info = {}
