@@ -32,7 +32,7 @@ def bound(r,c):
 def check(knight,d,command):
     r,c,h,w,k = knights[knight-1]
     if k <= 0:
-        return True
+        return 
     ret = True
     neigh_knight = set()
     for i in range(r, r + h):
