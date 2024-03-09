@@ -1,5 +1,6 @@
 import copy
-
+import sys
+sys.setrecursionlimit(10**7)
 N,M,K = map(int,input().split())
 graph = [list(map(int,input().split())) for _ in range(N)]
 participant = [[[] for _ in range(N)] for _ in range(N)]
@@ -38,10 +39,10 @@ def move():
     participant = temp_participant
 def rotate_square(i,j,minimum): #회전하고 출구 좌표도 잡아줘야됨
     global ey,ex,participant,graph
-    copy_graph = copy.deepcopy(graph)
-    copy_participant = copy.deepcopy(participant)
-    # copy_graph =[g[:] for g in graph]
-    # copy_participant = [p[:] for p in participant]
+    # copy_graph = copy.deepcopy(graph)
+    # copy_participant = copy.deepcopy(participant)
+    copy_graph =[g[:] for g in graph]
+    copy_participant = [p[:] for p in participant]
     for y in range(minimum+1):
         for x in range(minimum+1):
             graph[i+y][j+x] = copy_graph[i+minimum-x][j+y]
