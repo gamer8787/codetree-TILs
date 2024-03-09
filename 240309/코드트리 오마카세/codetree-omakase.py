@@ -19,9 +19,7 @@ for _ in range(Q):
         time = int(command[1])
         peo_count =0
         cho_count = 0
-        for name, info in name_info.items():
-            if info[2] ==0:
-                continue
+        for name, info in list(name_info.items())[:]:
             chobab = name_chobab[name]
             arrival_time = info[0]
             place = info[1]
@@ -49,6 +47,8 @@ for _ in range(Q):
             name_chobab[name] = remain_chobab
             if info[2] > 0:
                 peo_count +=1
+            if info[2] ==0:
+                name_info.pop(name)
         for name,cho in name_chobab.items():
             cho_count+= len(cho)
         print(peo_count,cho_count)
