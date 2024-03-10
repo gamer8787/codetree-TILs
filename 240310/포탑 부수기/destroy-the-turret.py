@@ -8,6 +8,11 @@ N,M,K = map(int,input().split())
 AD = [list(map(int, input().split())) for _ in range(N)]
 turret = [[[0,0] for _ in range(M)] for _ in range(N)]
 
+def pp():
+    for a in AD:
+        print(*a)
+    print()
+
 for stage in range(1,K+1):
     #1 공격자 선정
     attackers = []
@@ -16,6 +21,8 @@ for stage in range(1,K+1):
             if AD[i][j] > 0:
                 turret_info = [AD[i][j],turret[i][j][0],i+j,j,i]
                 attackers.append(turret_info)
+    if len(attackers) == 0:
+        break
     attackers.sort(key = lambda x:(x[0],-x[1],-x[2],-x[3]))
     first = attackers[0]
     _,_,_,ac,ar = first
@@ -32,6 +39,8 @@ for stage in range(1,K+1):
             if AD[i][j] > 0:
                 turret_info = [AD[i][j], turret[i][j][0], i + j, j, i]
                 victims.append(turret_info)
+    if len(victims) == 0:
+        break
     victims.sort(key=lambda x: (-x[0], x[1], x[2], x[3]))
     second = victims[0]
     _, _, _, vc, vr = second
@@ -52,15 +61,15 @@ for stage in range(1,K+1):
                 q.append((nr,nc))
     direction = visited[vr][vc]
     # print(direction)
-    r,c = ar,ac
+    nr,nc = ar,ac
     if direction!="": #레이저 공격
         AD[vr][vc] -= ad
         for d in direction[:-1]:
             d = int(d)
-            r += dy[d]
-            c += dx[d]
-            AD[r][c] -= ad//2
-            turret[r][c][1] = stage
+            nr = (nr + dy[d])%N
+            nc = (nc + dx[d])%M
+            AD[nr][nc] -= ad//2
+            turret[nr][nc][1] = stage
     # for a in AD:
     #     print(a)
     else:  #포탄 공격
@@ -87,5 +96,6 @@ for stage in range(1,K+1):
                 continue
             if AD[i][j] > 0:
                 AD[i][j]+=1
+    # pp()
     maximum_ad = max(map(max , AD))
     print(maximum_ad)
