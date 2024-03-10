@@ -47,7 +47,7 @@ for stage in range(1,K+1):
     turret[vr][vc][1] = stage
 
     #2-1 레이저 공격 #ar,ac 에서 vr,vc로
-    visited = [["" for _ in range(N)] for _ in range(N)]
+    visited = [["" for _ in range(M)] for _ in range(N)]
     q = deque()
     q.append((ar,ac))
     while q:
