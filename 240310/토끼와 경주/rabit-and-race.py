@@ -54,13 +54,8 @@ for _ in range(Q-2):
             heapq.heappush(rabbit,(jump+1,new_i+new_j,new_i,new_j,pid))
             turn_rabbit.add(pid)
             # print(new_i, new_j, pid)
-            # heapq.heappush(turn_rabbit,(-(new_i+new_j),-new_i,-new_j,-pid))
-            rabbit_score[pid]-=new_i+new_j
+            rabbit_score[pid]-=(new_i+new_j)
             all_rabbit +=(new_i+new_j)
-            # for p in rabbit_score:
-            #     if p==pid:
-            #         continue
-            #     rabbit_score[p] += new_i+new_j
         rabbit.sort(key = lambda x:(-x[1],-x[2],-x[3],-x[4]))
         for _,_,i,j,pid in rabbit:
             if pid in turn_rabbit:
