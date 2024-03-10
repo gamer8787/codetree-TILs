@@ -17,7 +17,8 @@ for _ in range(Q-2):
     c = list(map(int,input().split()))
     if c[0] == 200:
         K,S = c[1],c[2]
-        turn_rabbit = []
+        # turn_rabbit = []
+        turn_rabbit = set()
         for stage in range(1,K+1):
             # print(stage)
             avail = []
@@ -50,15 +51,18 @@ for _ in range(Q-2):
             avail.sort(key = lambda x:(-x[0],-x[1],-x[2]))
             _,new_i,new_j = avail[0]
             heapq.heappush(rabbit,(jump+1,new_i+new_j,new_i,new_j,pid))
+            turn_rabbit.add(pid)
             # print(new_i, new_j, pid)
-            heapq.heappush(turn_rabbit,(-(new_i+new_j),-new_i,-new_j,-pid))
+            # heapq.heappush(turn_rabbit,(-(new_i+new_j),-new_i,-new_j,-pid))
             for p in rabbit_score:
                 if p==pid:
                     continue
                 rabbit_score[p] += new_i+new_j
-        first_rabbit = heapq.heappop(turn_rabbit)
-        pid = -first_rabbit[3]
-        rabbit_score[pid]+=S
+        rabbit.sort(key = lambda x:(-x[1],-x[2],-x[3],-x[4]))
+        for _,_,i,j,pid in rabbit:
+            if pid in turn_rabbit:
+                rabbit_score[pid] += S
+                break
     elif c[0] == 300:
         pid,L = c[1],c[2]
         rabbit_distance[pid] *=L
