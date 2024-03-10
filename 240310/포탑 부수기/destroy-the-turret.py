@@ -21,7 +21,7 @@ for stage in range(1,K+1):
             if AD[i][j] > 0:
                 turret_info = [AD[i][j],turret[i][j][0],i+j,j,i]
                 attackers.append(turret_info)
-    if len(attackers) == 0:
+    if len(attackers) == 1:
         break
     attackers.sort(key = lambda x:(x[0],-x[1],-x[2],-x[3]))
     first = attackers[0]
@@ -60,7 +60,6 @@ for stage in range(1,K+1):
                 visited[nr][nc] = visited[r][c] + str(k)
                 q.append((nr,nc))
     direction = visited[vr][vc]
-    # print(direction)
     nr,nc = ar,ac
     if direction!="": #레이저 공격
         AD[vr][vc] -= ad
@@ -70,8 +69,7 @@ for stage in range(1,K+1):
             nc = (nc + dx[d])%M
             AD[nr][nc] -= ad//2
             turret[nr][nc][1] = stage
-    # for a in AD:
-    #     print(a)
+
     else:  #포탄 공격
         AD[vr][vc] -= ad
         for k in range(8):
