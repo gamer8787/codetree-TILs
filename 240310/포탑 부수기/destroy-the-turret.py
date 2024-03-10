@@ -97,5 +97,5 @@ for stage in range(1,K+1):
             if AD[i][j] > 0:
                 AD[i][j]+=1
     # pp()
-    maximum_ad = max(map(max , AD))
-    print(maximum_ad)
+maximum_ad = max(map(max , AD))
+print(maximum_ad)
