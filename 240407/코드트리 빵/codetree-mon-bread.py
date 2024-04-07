@@ -2,7 +2,7 @@ from collections import deque
 
 n,m = map(int,input().split())
 basecamp = [list(map(int,input().split())) for _ in range(n)]
-store = [[0,0]]
+store = [[-1,-1]]
 for _ in range(m):
     y,x = map(int,input().split())
     store.append([y-1,x-1])
@@ -14,6 +14,40 @@ dx = [0,-1,1,0]
 
 distance = [[-1 for _ in range(n)] for _ in range(n)]
 
+PRINT = False
+
+def print_minute(t):
+    if PRINT:
+        print(t,"분")
+
+def print_people():
+    if PRINT:
+        print("사람")
+        graph = [[0 for _ in range(n)] for _ in range(n)]
+        for i in range(1,m+1):
+            if people[i]!=[-1,-1]:
+                y,x = people[i]
+                graph[y][x] = i
+        for g in graph:
+            print(*g)
+        print()
+def print_store():
+    if PRINT:
+        print("편의점")
+        graph = [[0 for _ in range(n)] for _ in range(n)]
+        for i in range(1,m+1):
+            if store[i]!=[-1,-1]:
+                y,x = store[i]
+                graph[y][x] = i
+        for g in graph:
+            print(*g)
+        print()
+def print_base():
+    if PRINT:
+        print("베이스")
+        for b in basecamp:
+            print(*b)
+        print()
 def bfs(y,x):
     for i in range(n):
         for j in range(n):
@@ -48,6 +82,11 @@ def simulate(t): #t시간에 행해지는 시뮬
         _,_,ny,nx = avail[0]
         people[i] = [ny,nx]
 
+    for i in range(1,m+1):
+        if people[i] == store[i]:
+            sy,sx = store[i]
+            basecamp[sy][sx] = 2
+
     if t<=m:
         min_dis = 10**9
         min_y,min_x = -1,-1
@@ -63,14 +102,21 @@ def simulate(t): #t시간에 행해지는 시뮬
                         min_y,min_x = i,j
         people[t] = [min_y,min_x]
         basecamp[min_y][min_x] = 2
-    for i in range(1,m+1):
-        if people[i] == store[i]:
-            sy,sx = store[i]
-            basecamp[sy][sx] = 2
+
+
+if PRINT:
+    print("처음")
+    print_store()
+    print_people()
+    print_base()
 t = 1
 while True:
     all_complete = True
     simulate(t)
+    print_minute(t)
+    print_store()
+    print_people()
+    print_base()
     for i in range(1,m+1):
         if people[i] != store[i]:
             all_complete= False
