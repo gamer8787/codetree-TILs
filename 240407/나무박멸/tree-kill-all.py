@@ -35,7 +35,7 @@ def grow(time):
         for x in range(n):
             tree[y][x] += produce[y][x]
 
-def remove(y):
+def remove(time):
     global ans
     maximum = 0
     ry,rx = -1,-1
@@ -59,7 +59,7 @@ def remove(y):
                     rx = x
     ans += maximum
     tree[ry][rx] = 0
-    year[ry][rx] = y + c
+    year[ry][rx] = time + c
     for i in range(4):
         ny = ry
         nx = rx
@@ -68,7 +68,10 @@ def remove(y):
             nx = nx + dx2[i]
             if 0 <= ny < n and 0 <= nx < n and tree[ny][nx] > 0:
                 tree[ny][nx] = 0
-                year[ny][nx] = y + c
+                year[ny][nx] = time + c
+            elif 0 <= ny < n and 0 <= nx < n and tree[ny][nx] == 0:
+                year[ny][nx] = time + c
+                break
             else:
                 break
 for y in range(1,m+1):
