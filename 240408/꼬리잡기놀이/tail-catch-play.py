@@ -56,9 +56,14 @@ def find(r,c):
         for k in range(4):
             nr = r + dy[k]
             nc = c + dx[k]
-            if 0<=nr<n and 0<=nc<n and graph[nr][nc] in [1,2] and visited[nr][nc] == -1:
-                visited[nr][nc] = visited[r][c]+1
-                q.append((nr,nc))
+            if graph[r][c] == 3:
+                if 0 <= nr < n and 0 <= nc < n and graph[nr][nc] in [2] and visited[nr][nc] == -1:
+                    visited[nr][nc] = visited[r][c] + 1
+                    q.append((nr, nc))
+            else:
+                if 0<=nr<n and 0<=nc<n and graph[nr][nc] in [1,2] and visited[nr][nc] == -1:
+                    visited[nr][nc] = visited[r][c]+1
+                    q.append((nr,nc))
 def change_tail_head(r,c):
     hr,hc = -1,-1
     tr,tc = -1,-1
