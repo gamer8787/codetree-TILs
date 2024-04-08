@@ -8,30 +8,41 @@ dx = [0,1,0,-1]
 
 ans = 0
 
+P = False
+
+def print_graph():
+    if P:
+        for g in graph:
+            print(*g)
+        print()
+
+
 def move(): #1=>4, 2=>2 or 1 3=>2
     global graph
     copy_graph = [i[:] for i in graph]
+
     for i in range(n):
         for j in range(n):
             if graph[i][j] == 1:
                 for k in range(4):
                     ni = i + dy[k]
                     nj = j + dx[k]
-                    if 0<=ni<n and 0<=nj<n and graph[ni][nj]==4:
+                    if 0<=ni<n and 0<=nj<n and graph[ni][nj] in [3,4]:
                         copy_graph[ni][nj] = 1
-            elif graph[i][j] ==2:
-                for k in range(4):
-                    ni = i + dy[k]
-                    nj = j + dx[k]
-                    if 0 <= ni < n and 0 <= nj < n and graph[ni][nj] == 1:
-                        copy_graph[ni][nj] = 2
+                copy_graph[i][j] = 2
             elif graph[i][j] ==3:
+                tail_head = False
                 for k in range(4):
                     ni = i + dy[k]
                     nj = j + dx[k]
                     if 0 <= ni < n and 0 <= nj < n and graph[ni][nj] == 2:
                         copy_graph[ni][nj] = 3
-                copy_graph[i][j] = 4
+                    elif 0 <= ni < n and 0 <= nj < n and graph[ni][nj] == 1:
+                        tail_head = True
+                if tail_head:
+                    pass
+                else:
+                    copy_graph[i][j] = 4
     graph = copy_graph
 def find(r,c):
     visited = [[-1 for _ in range(n)] for _ in range(n)]
@@ -45,10 +56,9 @@ def find(r,c):
         for k in range(4):
             nr = r + dy[k]
             nc = c + dx[k]
-            if 0<=nr<n and 0<=nc<n and graph[nr][nc] in [1,2,3,4] and visited[nr][nc] == -1:
+            if 0<=nr<n and 0<=nc<n and graph[nr][nc] in [1,2] and visited[nr][nc] == -1:
                 visited[nr][nc] = visited[r][c]+1
                 q.append((nr,nc))
-
 def change_tail_head(r,c):
     hr,hc = -1,-1
     tr,tc = -1,-1
@@ -109,8 +119,20 @@ def ball(round):
                 ans += k**2
                 change_tail_head(r, line)
                 break
-
+if P:
+    print("처음")
+print_graph()
 for R in range(1,k+1):
+    if P:
+        print(R,"라운드")
     move()
+    if P:
+        print("이동 후")
+        print_graph()
     ball(R)
+    if P:
+        print("공 처리")
+        print_graph()
+    if P:
+        print(ans,"점")
 print(ans)
