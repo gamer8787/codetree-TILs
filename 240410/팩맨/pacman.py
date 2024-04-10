@@ -18,7 +18,19 @@ P = False
 def print_monster_graph():
     if P:
         print("몬스터 그래프")
-        for m in monster_graph:
+        temp = [[0 for _ in range(5)] for _ in range(5)]
+        for r,c,d in monster:
+            temp[r][c] +=1
+        for m in temp:
+            print(*m)
+        print()
+
+def print_pac():
+    if P:
+        print("팩맨 위치")
+        temp = [[0 for _ in range(5)] for _ in range(5)]
+        temp[R][C] = "*"
+        for m in temp:
             print(*m)
         print()
 
@@ -70,10 +82,15 @@ def move_pac():
         c3 = c2 + dx[i3]
         if not (1 <= r3 <= 4 and 1 <= c3 <= 4):
             continue
-        if [r1,c1] ==[r2,c2] or [r1,c1]==[r3,c3] or [r2,c2] == [r3,c3]:
-            continue
-        count = monster_graph[r1][c1] + monster_graph[r2][c2] + monster_graph[r3][c3]
+        avail = set()
+        avail.add((r1,c1))
+        avail.add((r2,c2))
+        avail.add((r3, c3))
+        count = 0
+        for r,c in avail:
+            count += monster_graph[r][c]
         new_place.append([count,i1,i2,i3])
+
     new_place.sort(key = lambda x:(-x[0],x[1],x[2],x[3]))
     count,i1,i2,i3 = new_place[0]
     r1 = R + dy[i1]
@@ -97,15 +114,27 @@ def come():
 def init():
     global monster_graph
     monster_graph = [[0 for _ in range(5)] for _ in range(5)]
+
+print_monster_graph()
+print_pac()
 for T in range(1,t+1):
     if P:
         print(T,"턴")
     init()
     produce()
     move_mon()
-    print_monster()
+    if P:
+        print("몬스터 이동")
+    print_monster_graph()
     move_pac()
-    print_monster()
+    if P:
+        print("팩맨 이동")
+    print_pac()
+    print_monster_graph()
     come()
-    print_monster()
+    if P:
+        print("알 부화")
+    print_monster_graph()
+
+
 print(len(monster))
