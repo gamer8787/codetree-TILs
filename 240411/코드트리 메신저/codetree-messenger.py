@@ -12,6 +12,8 @@ def count(n,d):
         c = child[0]
         if powers[c] >=d and alarm[c] ==True:
             return 1 + count(c,d+1)
+        elif powers[c] <d and alarm[c] == True:
+            return count(c,d+1)
         else:
             return 0
     elif len(child) ==2:
@@ -19,8 +21,12 @@ def count(n,d):
         ret = 0
         if powers[c1] >=d and alarm[c1] ==True:
             ret += (1 + count(c1,d+1))
+        elif powers[c1] <d and alarm[c1] ==True:
+            ret += count(c1,d+1)
         if powers[c2] >= d and alarm[c2] == True:
             ret += (1 + count(c2, d + 1))
+        elif powers[c2] < d and alarm[c2] == True:
+            ret += count(c2, d + 1)
         return ret
 
 for _ in range(Q):
@@ -55,3 +61,5 @@ for _ in range(Q):
     elif c[0] == 500:
         n = c[1]
         print(count(n,1))
+    # print(children)
+    # print(powers)
