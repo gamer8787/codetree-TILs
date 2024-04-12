@@ -56,18 +56,18 @@ def p300(t): #gap 계산해야됨
         waiting_domain = waiting_queue[domain]
         if not waiting_domain:
             continue
-        p,_,ID = waiting_domain[0]
+        p,domain_t,ID = waiting_domain[0]
         start = domain_start[domain]
         gap = domain_gap[domain]
         if gap !=0:
             if t < start + 3*gap:
                 continue
-        avail_domain.append([p,t,domain,ID])
+        avail_domain.append([p,domain_t,domain,ID])
     if not avail_domain:
         return
     avail_domain.sort()
     judging_n = heapq.heappop(judging_number)
-    p,t,domain,ID = avail_domain[0]
+    p,domain_t,domain,ID = avail_domain[0]
     waiting_domain = waiting_queue[domain]
     heapq.heappop(waiting_domain)
     url = domain+"/"+ID
