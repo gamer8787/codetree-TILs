@@ -53,13 +53,13 @@ def p300(src,dst):
         if len(belt_src) == 1 and len(belt_dst) == 1:
             belt[src] = [dst_last]
             belt[dst] = [src_last]
-        elif len(belt_src) == 1 and len(belt_dst) >= 1:
+        elif len(belt_src) == 1 and len(belt_dst) > 1:
             belt[src] = [dst_last]
             belt[dst][-1] = src_last
             front_behind[dst_last] = [-1,-1]
             front_behind[src_last] = [-1, belt_dst[-2]]
             front_behind[belt_dst[-2]][0] = src_last
-        elif len(belt_src) >= 1 and len(belt_dst) == 1:
+        elif len(belt_src) > 1 and len(belt_dst) == 1:
             belt[src][-1] = dst_last
             belt[dst] = [src_last]
             front_behind[src_last] = [-1,-1]
