@@ -54,6 +54,8 @@ def p300(t): #gap 계산해야됨
         if domain in judging_domain_set:
             continue
         waiting_domain = waiting_queue[domain]
+        if not waiting_domain:
+            continue
         p,_,ID = waiting_domain[0]
         start = domain_start[domain]
         gap = domain_gap[domain]
