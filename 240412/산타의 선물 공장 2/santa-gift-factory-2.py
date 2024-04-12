@@ -30,6 +30,7 @@ def p100(l):
 
 def p200(src,dst):
     if not belt[src]:
+        print(len(belt[dst]))
         return
     src_first = belt[src][0]
     if belt[dst]:
