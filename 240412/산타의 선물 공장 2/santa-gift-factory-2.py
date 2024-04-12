@@ -107,8 +107,8 @@ def p400(src,dst):
         src_mid1 = belt_src[(length-1)//2]
         src_mid2 = belt_src[(length-1)//2+1]
 
-        front_src = belt_src[(length-1)//2+1:]
-        belt[src] = belt_src[:(length-1)//2+1]
+        front_src = belt_src[((length-1)//2+1):]
+        belt[src] = belt_src[:((length-1)//2+1)]
         belt[dst].extend(front_src)
 
         front_behind[dst_last][0] = src_mid2
@@ -118,8 +118,8 @@ def p400(src,dst):
         src_mid1 = belt_src[(length-1) // 2]
         src_mid2 = belt_src[(length-1) // 2 + 1]
 
-        front_src = belt_src[(length-1) // 2 + 1:]
-        belt[src] = belt_src[:(length-1) // 2 + 1]
+        front_src = belt_src[((length-1) // 2 + 1):]
+        belt[src] = belt_src[:((length-1) // 2 + 1)]
         belt[dst].extend(front_src)
 
         front_behind[src_mid1][0] = -1
