@@ -32,6 +32,8 @@ def p200(w_max):
 
             front[first] = last
             front[second] = 0
+            back[first] = 0
+            back[last] = first
 
             belt_first[b] = second
             belt_last[b] = first
@@ -75,8 +77,8 @@ def p400(f_id):
 
             front[first] = last
             back[last] = first
+            front[f_id] = 0
             back[front1] = 0
-            back[back1] = first
 
             belt_last[b] = front1
             belt_first[b] = f_id
