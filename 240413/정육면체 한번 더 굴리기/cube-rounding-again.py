@@ -3,7 +3,7 @@ from collections import deque
 n, m = map(int,input().split())
 graph = [list(map(int,input().split())) for _ in range(n)]
 
-row = deque([1,3,6,5])
+row = deque([1,3,6,4])
 col = deque([1,2,6,5])
 
 dy = [0,1,0,-1]
@@ -28,7 +28,7 @@ def move():
         elif bottom < graph[y][x]:
             d = (d-1)%4
         else:
-            pass
+            d=d
         ny = y +dy[d]
         nx = x +dx[d]
         if not (0<=ny<n and 0<=nx<n) :
