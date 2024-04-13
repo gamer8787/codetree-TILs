@@ -91,6 +91,8 @@ def process2():
             for k in range(4):
                 nr = r + dy[k]
                 nc = c + dx[k]
+                if k in walls[r][c]:
+                    continue
                 if 0<=nr<n and 0<=nc<n:
                     if air[r][c] > air[nr][nc]:
                         temp_air[r][c] -= (air[r][c] - air[nr][nc])//4
